@@ -6,7 +6,7 @@ from PIL import Image, ImageFile
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 import numpy as np
 import cv2
-import bcolz
+#import bcolz
 import pickle
 import torch
 import mxnet as mx
@@ -52,7 +52,7 @@ def load_bin(path, rootdir, transform, image_size=[112,112]):
     if not rootdir.exists():
         rootdir.mkdir()
     bins, issame_list = pickle.load(open(path, 'rb'), encoding='bytes')
-    data = bcolz.fill([len(bins), 3, image_size[0], image_size[1]], dtype=np.float32, rootdir=rootdir, mode='w')
+    #data = bcolz.fill([len(bins), 3, image_size[0], image_size[1]], dtype=np.float32, rootdir=rootdir, mode='w')
     for i in range(len(bins)):
         _bin = bins[i]
         img = mx.image.imdecode(_bin).asnumpy()
@@ -67,8 +67,8 @@ def load_bin(path, rootdir, transform, image_size=[112,112]):
     return data, issame_list
 
 def get_val_pair(path, name):
-    carray = bcolz.carray(rootdir = path/name, mode='r')
-    issame = np.load(path/'{}_list.npy'.format(name))
+    #carray = bcolz.carray(rootdir = path/name, mode='r')
+    issame = np.load(path/'{}_list.npy'.format(name), allow_pickle=True)
     return carray, issame
 
 def get_val_data(data_path):

@@ -68,7 +68,7 @@ def prepare_facebank(conf, model, mtcnn, tta = True):
 
 def load_facebank(conf):
     embeddings = torch.load(conf.facebank_path/'facebank.pth')
-    names = np.load(conf.facebank_path/'names.npy')
+    names = np.load(conf.facebank_path/'names.npy', allow_pickle=True)
     return embeddings, names
 
 def face_reader(conf, conn, flag, boxes_arr, result_arr, learner, mtcnn, targets, tta):
